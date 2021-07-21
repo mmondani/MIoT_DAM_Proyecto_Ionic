@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Dispositivos
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,19 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Dispositivos</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-list lines="none">
+    <ion-item detail *ngFor="let disp of listadoDispositivos">
+      <ion-avatar slot="start">
+        <img src="https://via.placeholder.com/150">
+      </ion-avatar>
+      <ion-label>
+        <h3>Sensor {{disp.dispositivoId}} - {{disp.nombre}}</h3>
+        <p><ion-icon name="navigate-circle"></ion-icon> {{disp.ubicacion}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
