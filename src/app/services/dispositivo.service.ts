@@ -19,4 +19,13 @@ export class DispositivoService {
   public getDispositivos(): Array<Dispositivo> {
     return this.listadoDispositivos;
   }
+
+  public getDispositivo(id: number): Dispositivo {
+    let filteredList = this.listadoDispositivos.filter(disp => {
+      if (disp.dispositivoId === id)
+        return disp;
+    });
+
+    return filteredList[0];
+  }
 }

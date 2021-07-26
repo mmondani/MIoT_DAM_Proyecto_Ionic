@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DispositivoService } from '../services/dispositivo.service';
+import { Dispositivo } from '../dispositivo';
 
 @Component({
   selector: 'app-dispositivo',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DispositivoPage implements OnInit {
 
-  constructor() { }
+  private dispositivo: Dispositivo;
+
+
+  constructor(private route: ActivatedRoute, private dispositivoService: DispositivoService) { }
 
   ngOnInit() {
+    
+  }
+
+  ionViewWillEnter() {
+    let id = parseInt(this.route.snapshot.paramMap.get("id"));
+    this.dispositivo = this.dispositivoService.getDispositivo(id);
   }
 
 }

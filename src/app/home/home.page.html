@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content  [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Dispositivos</ion-title>
@@ -14,7 +14,7 @@
   </ion-header>
 
   <ion-list lines="none">
-    <ion-item detail *ngFor="let disp of listadoDispositivos">
+    <ion-item detail *ngFor="let disp of listadoDispositivos" [routerLink]="['/dispositivo/'+ disp.dispositivoId]" routerLinkActive="router-link-active" >
       <ion-avatar slot="start">
         <img src="https://via.placeholder.com/150">
       </ion-avatar>

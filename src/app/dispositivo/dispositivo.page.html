@@ -1,9 +1,20 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>dispositivo</ion-title>
+    <ion-back-button slot="start"></ion-back-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Dispositivos</ion-title>
+      <ion-back-button slot="start"></ion-back-button>
+    </ion-toolbar>
+  </ion-header>
 
+  <div *ngIf="dispositivo">
+    <ion-label>Dispositivo: {{dispositivo.dispositivoId}}</ion-label>
+  </div>
+  
 </ion-content>
