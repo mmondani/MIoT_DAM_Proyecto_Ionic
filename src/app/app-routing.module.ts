@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: 'dispositivo/:id',
     loadChildren: () => import('./dispositivo/dispositivo.module').then( m => m.DispositivoPageModule)
-  },
+  }
 ];
 
 @NgModule({

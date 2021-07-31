@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>dispositivo</ion-title>
+    <ion-title>Dispositivo</ion-title>
     <ion-back-button slot="start"></ion-back-button>
   </ion-toolbar>
 </ion-header>
@@ -8,13 +8,21 @@
 <ion-content>
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Dispositivos</ion-title>
+      <ion-title size="large">Dispositivo</ion-title>
       <ion-back-button slot="start"></ion-back-button>
     </ion-toolbar>
   </ion-header>
 
   <div *ngIf="dispositivo">
-    <ion-label>Dispositivo: {{dispositivo.dispositivoId}}</ion-label>
+    <detalle-sensor [dispositivo]="dispositivo"></detalle-sensor>
+
+    <div [ngSwitch]="ultimoRiego?.apertura">
+      <ion-button expand="block" *ngSwitchCase="0">ABRIR ELECTROVÁLVULA</ion-button>
+      <ion-button expand="block" *ngSwitchCase="1">CERRAR ELECTROVÁLVULA</ion-button>
+      <ion-button expand="block" *ngSwitchDefault>ABRIR ELECTROVÁLVULA</ion-button>
+    </div>
+      
+    <ion-button expand="block" fill="outline">VER TODAS LAS MEDICIONES</ion-button>
+    <ion-button expand="block" fill="outline">VER LOG RIEGOS</ion-button>
   </div>
-  
 </ion-content>

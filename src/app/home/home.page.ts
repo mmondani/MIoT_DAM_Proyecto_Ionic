@@ -12,7 +12,13 @@ export class HomePage {
   public listadoDispositivos: Array<Dispositivo>;
 
   constructor(private dispositivoService: DispositivoService) {
-    this.listadoDispositivos = dispositivoService.getDispositivos();
+    //this.listadoDispositivos = dispositivoService.getDispositivos();
+    dispositivoService.getDispositivos()
+    .subscribe(resp => {
+      if (resp.status == 200) {
+        this.listadoDispositivos = [...resp.body!];
+      }
+    })
   }
 
 }

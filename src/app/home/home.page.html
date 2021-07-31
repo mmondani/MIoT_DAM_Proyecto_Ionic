@@ -15,9 +15,7 @@
 
   <ion-list lines="none">
     <ion-item detail *ngFor="let disp of listadoDispositivos" [routerLink]="['/dispositivo/'+ disp.dispositivoId]" routerLinkActive="router-link-active" >
-      <ion-avatar slot="start">
-        <img src="https://via.placeholder.com/150">
-      </ion-avatar>
+      <ion-icon name="thermometer-outline" slot="start"></ion-icon>
       <ion-label>
         <h3>Sensor {{disp.dispositivoId}} - {{disp.nombre}}</h3>
         <p><ion-icon name="navigate-circle"></ion-icon> {{disp.ubicacion}}</p>
