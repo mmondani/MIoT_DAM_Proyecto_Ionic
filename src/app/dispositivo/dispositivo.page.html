@@ -6,8 +6,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-header collapse="condense">
-    <ion-toolbar *ngIf="dispositivo">
+  <ion-header collapse="condense" *ngIf="dispositivo">
+    <ion-toolbar>
       <ion-title size="large">{{dispositivo.nombre}}</ion-title>
       <ion-back-button slot="start"></ion-back-button>
     </ion-toolbar>
