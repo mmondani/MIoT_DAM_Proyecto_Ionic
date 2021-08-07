@@ -1,7 +1,8 @@
 //correr antes npm install --save highcharts
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import { Subscription } from 'rxjs';
 import { Dispositivo } from '../dispositivo';
 import { DispositivoService } from '../services/dispositivo.service';
 import { Medicion } from '../services/medicion';
@@ -14,34 +15,36 @@ require('highcharts/modules/solid-gauge')(Highcharts);
   templateUrl: './detalle-sensor.page.html',
   styleUrls: ['./detalle-sensor.page.scss'],
 })
-export class DetalleSensorPage implements OnInit {
+export class DetalleSensorPage implements OnInit, OnDestroy {
 
   private ultimaMedicion: Medicion;
   public myChart;
   private chartOptions;
+  private ultimaMedicionSubscription: Subscription;
 
   @Input() dispositivo:Dispositivo;
   constructor(private dispositivoService: DispositivoService) { 
   }
 
   ngOnInit() {
-    this.dispositivoService.getUltimaMedicion(this.dispositivo.dispositivoId)
-      .subscribe(resp => {
-          if (resp.status == 200) {
-            this.ultimaMedicion = resp.body;
+    this.ultimaMedicionSubscription = this.dispositivoService.ultimaMedicionSubject.subscribe({
+      next: (medicion: Medicion) => {
+        this.ultimaMedicion = medicion;
 
-            this.generarChart();
+        this.generarChart();
 
-            //llamo al update del chart para refrescar y mostrar el nuevo valor
-            this.myChart.update({series: [{
-                name: 'kPA',
-                data: [parseInt(this.ultimaMedicion.valor)],
-                tooltip: {
-                    valueSuffix: ' kPA'
-                }
-            }]});
-          }
-      });
+        //llamo al update del chart para refrescar y mostrar el nuevo valor
+        this.myChart.update({series: [{
+            name: 'kPA',
+            data: [parseInt(this.ultimaMedicion.valor)],
+            tooltip: {
+                valueSuffix: ' kPA'
+            }
+        }]});
+      }
+    });
+
+    this.dispositivoService.getUltimaMedicion(this.dispositivo.dispositivoId);
   }
 
   ionViewWillEnter() {
@@ -50,6 +53,10 @@ export class DetalleSensorPage implements OnInit {
 
   ionViewDidEnter() {
     
+  }
+
+  ngOnDestroy(): void {
+    this.ultimaMedicionSubscription.unsubscribe();
   }
 
   generarChart() {

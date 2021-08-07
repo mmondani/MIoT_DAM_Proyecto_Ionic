@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Dispositivo } from '../dispositivo';
 import { DispositivoService } from '../services/dispositivo.service';
 
@@ -7,18 +8,26 @@ import { DispositivoService } from '../services/dispositivo.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit, OnDestroy {
 
   public listadoDispositivos: Array<Dispositivo>;
+  private dispositivosSubscription: Subscription;
 
   constructor(private dispositivoService: DispositivoService) {
-    //this.listadoDispositivos = dispositivoService.getDispositivos();
-    dispositivoService.getDispositivos()
-    .subscribe(resp => {
-      if (resp.status == 200) {
-        this.listadoDispositivos = [...resp.body!];
+  }
+
+  ngOnInit(): void {
+    this.dispositivoService.dispositivosSubject.subscribe({
+      next: (value: Array<Dispositivo>) => {
+        this.listadoDispositivos = value
       }
-    })
+    });
+
+    this.dispositivoService.getDispositivos();
+  }
+
+  ngOnDestroy(): void {
+    this.dispositivosSubscription.unsubscribe();
   }
 
 }
