@@ -16,6 +16,8 @@ export class DispositivoService {
   public dispositivoSubject: Subject<Dispositivo> = new Subject<Dispositivo>();
   public ultimoRiegoSubject: Subject<Riego> = new Subject<Riego>();
   public ultimaMedicionSubject: Subject<Medicion> = new Subject<Medicion>();
+  public medicionesSubject: Subject<Array<Medicion>> = new Subject<Array<Medicion>>();
+
 
   constructor(private http: HttpClient) {
     this.listadoDispositivos = [
@@ -80,6 +82,20 @@ export class DispositivoService {
         filter(resp => resp.status == 200))
       .subscribe(resp => {
           this.ultimoRiegoSubject.next(resp.body);
+      })
+  }
+
+  public getMediciones(id: number): void {
+    let options = {
+      observe: 'response' as const
+    };
+
+    this.http
+      .get<Array<Medicion>>(`http://localhost:8000/medicion/${id}`, options)
+      .pipe(
+        filter(resp => resp.status == 200))
+      .subscribe(resp => {
+          this.medicionesSubject.next(resp.body);
       })
   }
 }
