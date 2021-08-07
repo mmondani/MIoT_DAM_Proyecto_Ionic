@@ -4,10 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MedicionesPageRoutingModule } from './mediciones-routing.module';
+import { RiegosPageRoutingModule } from './riegos-routing.module';
 
-import { MedicionesPage } from './mediciones.page';
-import { FechaPipe } from '../pipes/fecha.pipe';
+import { RiegosPage } from './riegos.page';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -15,11 +14,9 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    MedicionesPageRoutingModule,
+    RiegosPageRoutingModule,
     SharedModule
   ],
-  declarations: [
-    MedicionesPage
-  ]
+  declarations: [RiegosPage]
 })
-export class MedicionesPageModule {}
+export class RiegosPageModule {}

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DispositivoService } from '../services/dispositivo.service';
-import { Dispositivo } from '../dispositivo';
+import { Dispositivo } from '../services/dispositivo';
 import { Riego } from '../services/riego';
 import { Subscription } from 'rxjs';
 

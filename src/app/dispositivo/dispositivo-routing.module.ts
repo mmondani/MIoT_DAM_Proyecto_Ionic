@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'mediciones',
     loadChildren: () => import('../mediciones/mediciones.module').then( m => m.MedicionesPageModule)
+  },
+  {
+    path: ':valvulaId/riegos',
+    loadChildren: () => import('../riegos/riegos.module').then( m => m.RiegosPageModule)
   }
 ];
 

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Dispositivo } from '../dispositivo';
+import { Dispositivo } from '../services/dispositivo';
 import { DispositivoService } from '../services/dispositivo.service';
 
 @Component({

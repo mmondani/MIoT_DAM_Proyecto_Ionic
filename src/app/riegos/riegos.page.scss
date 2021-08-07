@@ -1,4 +1,4 @@
-#mediciones {
+#riegos {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 90%;
@@ -6,24 +6,24 @@
     margin-top: 20px;
 }
 
-#mediciones th{
+#riegos th{
     text-align: center !important;
 }
 
-#mediciones {
+#riegos {
     text-align: center;
 }
 
-#mediciones td, #customers th {
+#riegos td, #customers th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-#mediciones tr:nth-child(even){background-color: #f2f2f2;}
+#riegos tr:nth-child(even){background-color: #f2f2f2;}
 
-#mediciones tr:hover {background-color: #ddd;}
+#riegos tr:hover {background-color: #ddd;}
 
-#mediciones th {
+#riegos th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

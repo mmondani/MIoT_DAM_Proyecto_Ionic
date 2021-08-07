@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Dispositivo } from '../dispositivo';
+import { Dispositivo } from './dispositivo';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, retry, pluck, filter } from 'rxjs/operators';
 import { Medicion } from './medicion';
@@ -17,7 +17,7 @@ export class DispositivoService {
   public ultimoRiegoSubject: Subject<Riego> = new Subject<Riego>();
   public ultimaMedicionSubject: Subject<Medicion> = new Subject<Medicion>();
   public medicionesSubject: Subject<Array<Medicion>> = new Subject<Array<Medicion>>();
-
+  public riegosSubject: Subject<Array<Riego>> = new Subject<Array<Riego>>();
 
   constructor(private http: HttpClient) {
     this.listadoDispositivos = [
@@ -71,13 +71,13 @@ export class DispositivoService {
     })
   }
 
-  public getUltimoRiego(id: number): void {
+  public getUltimoRiego(valvulaId: number): void {
     let options = {
       observe: 'response' as const
     };
 
     this.http
-      .get<Riego>(`http://localhost:8000/riego/last/${id}`, options)
+      .get<Riego>(`http://localhost:8000/riego/last/${valvulaId}`, options)
       .pipe(
         filter(resp => resp.status == 200))
       .subscribe(resp => {
@@ -96,6 +96,20 @@ export class DispositivoService {
         filter(resp => resp.status == 200))
       .subscribe(resp => {
           this.medicionesSubject.next(resp.body);
+      })
+  }
+
+  public getRiegos(valvulaId: number): void {
+    let options = {
+      observe: 'response' as const
+    };
+
+    this.http
+      .get<Array<Riego>>(`http://localhost:8000/riego/${valvulaId}`, options)
+      .pipe(
+        filter(resp => resp.status == 200))
+      .subscribe(resp => {
+          this.riegosSubject.next(resp.body);
       })
   }
 }

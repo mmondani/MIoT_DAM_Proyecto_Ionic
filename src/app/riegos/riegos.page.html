@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Mediciones</ion-title>
+    <ion-title>Riegos</ion-title>
     <ion-back-button slot="start"></ion-back-button>
   </ion-toolbar>
 </ion-header>
@@ -8,29 +8,27 @@
 <ion-content>
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Mediciones</ion-title>
+      <ion-title size="large">Riegos</ion-title>
       <ion-back-button slot="start"></ion-back-button>
     </ion-toolbar>
   </ion-header>
 
-  <div *ngIf="listaMediciones">
-    <ng-container *ngIf="listaMediciones.length == 0 else tabla">
+  <div *ngIf="listaRiegos">
+    <ng-container *ngIf="listaRiegos.length == 0 else tabla">
       <div id="aviso">No hay entradas</div>
     </ng-container> 
 
     <ng-template #tabla>
-      <table id="mediciones">
+      <table id="riegos" >
         <tr>
           <th>Fecha</th>
-          <th>Valor<br>[KPa]</th>
+          <th>Acción</th>
         </tr>
-        <tr *ngFor="let medicion of listaMediciones">
-          <td>{{medicion.fecha | fecha}} </td>
-          <td>{{medicion.valor}}</td>
+        <tr *ngFor="let riego of listaRiegos">
+          <td>{{riego.fecha | fecha}} </td>
+          <td>{{riego.apertura? "Apertura" : "Cierre"}}</td>
         </tr>
-        
       </table>
     </ng-template>
-    
   </div>
 </ion-content>

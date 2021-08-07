@@ -7,9 +7,7 @@ export class FechaPipe implements PipeTransform {
 
   transform(value: string): string {
     let fecha = new Date(value);
-
-    console.log(value);
-
+    
     let day = fecha.getDate().toString().padStart(2, "0");
     let month = (fecha.getMonth() + 1).toString().padStart(2, "0");
     let year = fecha.getFullYear();
