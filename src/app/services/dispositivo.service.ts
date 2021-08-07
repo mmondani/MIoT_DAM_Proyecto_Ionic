@@ -5,6 +5,8 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, retry, pluck, filter } from 'rxjs/operators';
 import { Medicion } from './medicion';
 import { Riego } from './riego';
+import { RiegoPost } from './riegopost';
+import { MedicionPost } from './medicionpost';
 
 
 @Injectable({
@@ -18,6 +20,9 @@ export class DispositivoService {
   public ultimaMedicionSubject: Subject<Medicion> = new Subject<Medicion>();
   public medicionesSubject: Subject<Array<Medicion>> = new Subject<Array<Medicion>>();
   public riegosSubject: Subject<Array<Riego>> = new Subject<Array<Riego>>();
+  public riegoPostSubject: Subject<void> = new Subject<void>();
+  public medicionPostSubject: Subject<void> = new Subject<void>();
+
 
   constructor(private http: HttpClient) {
     this.listadoDispositivos = [
@@ -110,6 +115,35 @@ export class DispositivoService {
         filter(resp => resp.status == 200))
       .subscribe(resp => {
           this.riegosSubject.next(resp.body);
+      })
+  }
+
+  public newRiego(riegoPost: RiegoPost): void {
+    let options = {
+      observe: 'response' as const
+    };
+
+    this.http
+      .post<void>(`http://localhost:8000/riego`, riegoPost, options)
+      .pipe(
+        filter(resp => resp.status == 200))
+      .subscribe(resp => {
+          this.riegoPostSubject.next();
+      })
+  }
+
+
+  public newMedicion(medicionPost: MedicionPost): void {
+    let options = {
+      observe: 'response' as const
+    };
+
+    this.http
+      .post<void>(`http://localhost:8000/medicion`, medicionPost, options)
+      .pipe(
+        filter(resp => resp.status == 200))
+      .subscribe(resp => {
+          this.medicionPostSubject.next();
       })
   }
 }

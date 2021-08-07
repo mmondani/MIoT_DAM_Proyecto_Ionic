@@ -17,9 +17,9 @@
     <detalle-sensor [dispositivo]="dispositivo"></detalle-sensor>
 
     <div [ngSwitch]="ultimoRiego?.apertura">
-      <ion-button expand="block" *ngSwitchCase="0">ABRIR ELECTROVÁLVULA</ion-button>
-      <ion-button expand="block" *ngSwitchCase="1">CERRAR ELECTROVÁLVULA</ion-button>
-      <ion-button expand="block" *ngSwitchDefault>ABRIR ELECTROVÁLVULA</ion-button>
+      <ion-button expand="block" *ngSwitchCase="0" (click)="abrirValvula()">ABRIR ELECTROVÁLVULA</ion-button>
+      <ion-button expand="block" *ngSwitchCase="1" (click)="cerrarValvula()">CERRAR ELECTROVÁLVULA</ion-button>
+      <ion-button expand="block" *ngSwitchDefault (click)="abrirValvula()">ABRIR ELECTROVÁLVULA</ion-button>
     </div>
       
     <ion-button expand="block" fill="outline" [routerLink]="['mediciones']" routerLinkActive="router-link-active" >VER TODAS LAS MEDICIONES</ion-button>
