@@ -69,7 +69,7 @@ export class DetalleSensorPage implements OnInit, OnDestroy {
           plotShadow: false
         }
         ,title: {
-          text: this.dispositivo.nombre
+          text: ''
         }
 
         ,credits:{enabled:false}
