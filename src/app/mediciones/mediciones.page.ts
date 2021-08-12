@@ -12,25 +12,18 @@ import { Medicion } from '../services/medicion';
 export class MedicionesPage implements OnInit, OnDestroy {
 
   public listaMediciones: Array<Medicion> = [];
-  private medicionesSubscription: Subscription;
 
 
   constructor(private route: ActivatedRoute, private dispositivoService: DispositivoService) { }
 
 
-  ngOnInit() {
+  async ngOnInit() {
     let id = this.route.snapshot.params["id"];
 
-    this.medicionesSubscription = this.dispositivoService.medicionesSubject.subscribe({
-      next: (mediciones: Array<Medicion>) => {
-        this.listaMediciones = mediciones;
-      }
-    });
-    this.dispositivoService.getMediciones(id);
+    this.listaMediciones = await this.dispositivoService.getMediciones(id);
   }
 
 
   ngOnDestroy(): void {
-    this.medicionesSubscription.unsubscribe();
   }
 }

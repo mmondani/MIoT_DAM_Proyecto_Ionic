@@ -14,7 +14,7 @@
   </ion-header>
 
   <div *ngIf="dispositivo">
-    <detalle-sensor [dispositivo]="dispositivo"></detalle-sensor>
+    <detalle-sensor [medicion]="ultimaMedicion" *ngIf="ultimaMedicion"></detalle-sensor>
 
     <div [ngSwitch]="ultimoRiego?.apertura">
       <ion-button expand="block" *ngSwitchCase="0" (click)="abrirValvula()">ABRIR ELECTROVÁLVULA</ion-button>

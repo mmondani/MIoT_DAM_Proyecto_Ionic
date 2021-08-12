@@ -10,41 +10,24 @@ declare var require: any;
 require('highcharts/highcharts-more')(Highcharts);
 require('highcharts/modules/solid-gauge')(Highcharts);
 
+
+
 @Component({
   selector: 'detalle-sensor',
   templateUrl: './detalle-sensor.page.html',
   styleUrls: ['./detalle-sensor.page.scss'],
 })
 export class DetalleSensorPage implements OnInit, OnDestroy {
-
-  private ultimaMedicion: Medicion;
   public myChart;
   private chartOptions;
-  private ultimaMedicionSubscription: Subscription;
 
-  @Input() dispositivo:Dispositivo;
+
+  @Input() medicion:number;
   constructor(private dispositivoService: DispositivoService) { 
   }
 
   ngOnInit() {
-    this.ultimaMedicionSubscription = this.dispositivoService.ultimaMedicionSubject.subscribe({
-      next: (medicion: Medicion) => {
-        this.ultimaMedicion = medicion;
-
-        this.generarChart();
-
-        //llamo al update del chart para refrescar y mostrar el nuevo valor
-        this.myChart.update({series: [{
-            name: 'kPA',
-            data: [parseInt(this.ultimaMedicion.valor)],
-            tooltip: {
-                valueSuffix: ' kPA'
-            }
-        }]});
-      }
-    });
-
-    this.dispositivoService.getUltimaMedicion(this.dispositivo.dispositivoId);
+    this.generarChart();
   }
 
   ionViewWillEnter() {
@@ -56,7 +39,6 @@ export class DetalleSensorPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ultimaMedicionSubscription.unsubscribe();
   }
 
   generarChart() {
@@ -120,7 +102,7 @@ export class DetalleSensorPage implements OnInit, OnDestroy {
   
     series: [{
         name: 'kPA',
-        data: [0],
+        data: [this.medicion],
         tooltip: {
             valueSuffix: ' kPA'
         }

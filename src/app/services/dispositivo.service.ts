@@ -14,14 +14,6 @@ import { MedicionPost } from './medicionpost';
 })
 export class DispositivoService {
   private listadoDispositivos: Array<Dispositivo>;
-  public dispositivosSubject: Subject<Array<Dispositivo>> = new Subject<Array<Dispositivo>>();
-  public dispositivoSubject: Subject<Dispositivo> = new Subject<Dispositivo>();
-  public ultimoRiegoSubject: Subject<Riego> = new Subject<Riego>();
-  public ultimaMedicionSubject: Subject<Medicion> = new Subject<Medicion>();
-  public medicionesSubject: Subject<Array<Medicion>> = new Subject<Array<Medicion>>();
-  public riegosSubject: Subject<Array<Riego>> = new Subject<Array<Riego>>();
-  public riegoPostSubject: Subject<void> = new Subject<void>();
-  public medicionPostSubject: Subject<void> = new Subject<void>();
 
 
   constructor(private http: HttpClient) {
@@ -33,117 +25,108 @@ export class DispositivoService {
     ];
   }
 
-  public getDispositivos(): void {
+  public getDispositivos(): Promise<Array<Dispositivo>> {
     let options = {
       observe: 'response' as const
     };
 
-    this.http
+    return this.http
       .get<Array<Dispositivo>>("http://localhost:8000/dispositivo", options)
       .pipe(
-        filter(resp => resp.status == 200))
-      .subscribe(resp => {
-          this.listadoDispositivos = [...resp.body!];
-          this.dispositivosSubject.next(this.listadoDispositivos);
-      })
+        filter(resp => resp.status == 200),
+        pluck("body"))
+      .toPromise();
   }
 
-  public getDispositivo(id: number): void {
+  public getDispositivo(id: number): Promise<Dispositivo> {
     let options = {
       observe: 'response' as const
     };
 
-    this.http
+    return this.http
       .get<Dispositivo>(`http://localhost:8000/dispositivo/${id}`, options)
       .pipe(
-        filter(resp => resp.status == 200))
-      .subscribe(resp => {
-          this.dispositivoSubject.next(resp.body);
-      })
+        filter(resp => resp.status == 200),
+        pluck("body"))
+      .toPromise();
   }
 
-  public getUltimaMedicion(id: number): void {
+  public getUltimaMedicion(id: number): Promise<Medicion> {
     let options = {
       observe: 'response' as const
     };
 
-    this.http
+    return this.http
     .get<Medicion>(`http://localhost:8000/medicion/last/${id}`, options)
     .pipe(
-      filter(resp => resp.status == 200))
-    .subscribe(resp => {
-        this.ultimaMedicionSubject.next(resp.body);
-    })
+      filter(resp => resp.status == 200),
+      pluck("body"))
+    .toPromise();
   }
 
-  public getUltimoRiego(valvulaId: number): void {
+  public getUltimoRiego(valvulaId: number): Promise<Riego> {
     let options = {
       observe: 'response' as const
     };
 
-    this.http
+    return this.http
       .get<Riego>(`http://localhost:8000/riego/last/${valvulaId}`, options)
       .pipe(
-        filter(resp => resp.status == 200))
-      .subscribe(resp => {
-          this.ultimoRiegoSubject.next(resp.body);
-      })
+        filter(resp => resp.status == 200),
+        pluck("body"))
+      .toPromise();
   }
 
-  public getMediciones(id: number): void {
+  public getMediciones(id: number): Promise<Array<Medicion>> {
     let options = {
       observe: 'response' as const
     };
 
-    this.http
+    return this.http
       .get<Array<Medicion>>(`http://localhost:8000/medicion/${id}`, options)
       .pipe(
-        filter(resp => resp.status == 200))
-      .subscribe(resp => {
-          this.medicionesSubject.next(resp.body);
-      })
+        filter(resp => resp.status == 200),
+        pluck("body"))
+      .toPromise();
   }
 
-  public getRiegos(valvulaId: number): void {
+  public getRiegos(valvulaId: number): Promise<Array<Riego>> {
     let options = {
       observe: 'response' as const
     };
 
-    this.http
+    return this.http
       .get<Array<Riego>>(`http://localhost:8000/riego/${valvulaId}`, options)
       .pipe(
-        filter(resp => resp.status == 200))
-      .subscribe(resp => {
-          this.riegosSubject.next(resp.body);
-      })
+        filter(resp => resp.status == 200),
+        pluck("body"))
+      .toPromise();
   }
 
-  public newRiego(riegoPost: RiegoPost): void {
+  public newRiego(riegoPost: RiegoPost): Promise<void> {
     let options = {
       observe: 'response' as const
     };
 
-    this.http
+    return this.http
       .post<void>(`http://localhost:8000/riego`, riegoPost, options)
       .pipe(
-        filter(resp => resp.status == 200))
-      .subscribe(resp => {
-          this.riegoPostSubject.next();
-      })
+        filter(resp => resp.status == 200),
+        pluck("body"))
+      .toPromise();
   }
 
 
-  public newMedicion(medicionPost: MedicionPost): void {
+  public newMedicion(medicionPost: MedicionPost): Promise<void> {
     let options = {
       observe: 'response' as const
     };
 
-    this.http
+    return this.http
       .post<void>(`http://localhost:8000/medicion`, medicionPost, options)
       .pipe(
-        filter(resp => resp.status == 200))
-      .subscribe(resp => {
-          this.medicionPostSubject.next();
-      })
+        filter(resp => resp.status == 200),
+        pluck("body"))
+      .toPromise();
   }
 }

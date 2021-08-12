@@ -13,20 +13,13 @@ export class RiegosPage implements OnInit {
 
   public listaRiegos: Array<Riego> = [];
   private idValvula;
-  private riegosSubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private dispositivoService: DispositivoService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.idValvula = this.route.snapshot.params["valvulaId"];
     
-    this.riegosSubscription = this.dispositivoService.riegosSubject.subscribe({
-      next: (riegos: Array<Riego>) => {
-        this.listaRiegos = riegos;
-      }
-    });
-    
-    this.dispositivoService.getRiegos(this.idValvula);
+    this.listaRiegos = await this.dispositivoService.getRiegos(this.idValvula);
   }
 
 }

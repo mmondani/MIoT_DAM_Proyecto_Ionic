@@ -11,23 +11,20 @@ import { DispositivoService } from '../services/dispositivo.service';
 export class HomePage implements OnInit, OnDestroy {
 
   public listadoDispositivos: Array<Dispositivo>;
-  private dispositivosSubscription: Subscription;
 
   constructor(private dispositivoService: DispositivoService) {
   }
 
-  ngOnInit(): void {
-    this.dispositivoService.dispositivosSubject.subscribe({
-      next: (value: Array<Dispositivo>) => {
-        this.listadoDispositivos = value
-      }
-    });
-
-    this.dispositivoService.getDispositivos();
+  async ngOnInit()  {
+    try{
+      this.listadoDispositivos = await this.dispositivoService.getDispositivos()
+    }
+    catch(error) {
+      console.log(error)
+    }
   }
 
   ngOnDestroy(): void {
-    this.dispositivosSubscription.unsubscribe();
   }
 
 }
