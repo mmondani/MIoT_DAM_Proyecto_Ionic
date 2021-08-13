@@ -1,6 +1,6 @@
 //correr antes npm install --save highcharts
 
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { Subscription } from 'rxjs';
 import { Dispositivo } from '../services/dispositivo';
@@ -17,13 +17,18 @@ require('highcharts/modules/solid-gauge')(Highcharts);
   templateUrl: './detalle-sensor.page.html',
   styleUrls: ['./detalle-sensor.page.scss'],
 })
-export class DetalleSensorPage implements OnInit, OnDestroy {
+export class DetalleSensorPage implements OnInit, OnDestroy, OnChanges {
   public myChart;
   private chartOptions;
 
 
   @Input() medicion:number;
   constructor(private dispositivoService: DispositivoService) { 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.medicion = <number>changes.medicion.currentValue;
+    this.generarChart();
   }
 
   ngOnInit() {
