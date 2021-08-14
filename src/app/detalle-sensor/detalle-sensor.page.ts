@@ -27,7 +27,7 @@ export class DetalleSensorPage implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.medicion = <number>changes.medicion.currentValue;
+    this.medicion = this.medicion? <number>changes.medicion.currentValue: 0;
     this.generarChart();
   }
 
